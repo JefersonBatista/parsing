@@ -13,7 +13,9 @@ const connection = new Pool({
 async function saveSponsoredReposInJSON() {
   try {
     const result = await connection.query(
-      `SELECT * FROM repositories WHERE "hasSponsorship"=true`
+      `SELECT
+        name, owner, description, topic, language, stars
+      FROM repositories WHERE "hasSponsorship"=true ORDER BY stars DESC;`
     );
 
     const sponsoredRepos = JSON.stringify(result.rows);
